@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
-  devise_for :users
+  # devise_for :admins
+  # devise_for :users
+  
+  devise_for :users, controllers: {
+    registrations: 'public/registrations',
+    sessions: 'public/sessions'
+  }
+  #単数形？
+
+  devise_for :admins, controllers: {
+    registrations: 'admins/registrations',
+    sessions: 'admins/sessions'
+  } 
+  #単数形？
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root to: "homes#top"
   get "about" => "homes#about"
@@ -14,4 +28,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
 end
