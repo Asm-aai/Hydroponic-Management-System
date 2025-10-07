@@ -1,0 +1,2 @@
+class Masurement < ApplicationRecord
+end

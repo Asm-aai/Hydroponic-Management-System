@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_05_025837) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_07_154829) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -51,6 +51,45 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_05_025837) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
+  create_table "alerts", force: :cascade do |t|
+    t.integer "masurement_id_id", null: false
+    t.integer "alert_type"
+    t.text "message"
+    t.boolean "resolved", default: false
+    t.date "resolved_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["masurement_id_id"], name: "index_alerts_on_masurement_id_id"
+  end
+
+  create_table "costs", force: :cascade do |t|
+    t.integer "plant_id_id", null: false
+    t.string "item_name"
+    t.decimal "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plant_id_id"], name: "index_costs_on_plant_id_id"
+  end
+
+  create_table "masurements", force: :cascade do |t|
+    t.integer "plant_id_id", null: false
+    t.integer "measurement_type"
+    t.decimal "value"
+    t.date "measured_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plant_id_id"], name: "index_masurements_on_plant_id_id"
+  end
+
+  create_table "plants", force: :cascade do |t|
+    t.string "name"
+    t.date "planted_at"
+    t.date "harvested_at"
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -65,4 +104,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_05_025837) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "alerts", "masurement_ids"
+  add_foreign_key "costs", "plant_ids"
+  add_foreign_key "masurements", "plant_ids"
 end
