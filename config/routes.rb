@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "masurements/new"
+  get "masurements/index"
+  get "masurements/show"
+  get "masurements/edit"
   # devise_for :admins
   # devise_for :users
   
