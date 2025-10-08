@@ -1,2 +1,7 @@
-<h1>Plants#index</h1>
-<p>Find me in app/views/plants/index.html.erb</p>
+<h1>栽培一覧</h1>
+<% @plants.each do |plant| %>
+  <h2><%= link_to plant.name, plant_path(plant) %></h2>
+  <p>植えた日：<%= plant.planted_at %></p>
+  <p>採取日： <%= plant.harvested_at %></p>
+  <p>コメント：<%= plant.comment %></p>
+<% end %>

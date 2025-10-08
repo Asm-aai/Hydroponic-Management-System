@@ -11,21 +11,21 @@ class PlantsController < ApplicationController
   end
 
   def index
-    @plamnts = Plant.all
+    @plants = Plant.all
   end
 
   def show
-    @plamnt = Plant.find(params[:id])
+    @plant = Plant.find(params[:id])
   end
 
   def edit
-    @plamnt = Plant.find(params[:id])
-    @plamnt.update
+    @plant = Plant.find(params[:id])
+    @plant.update
   end
 
   def destroy
-    @plamnt = Plant.find(params[:id])
-    @plamnt.destroy
+    plant = Plant.find(params[:id])
+    plant.destroy
   end
 
   private
