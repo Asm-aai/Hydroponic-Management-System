@@ -1,0 +1,9 @@
+<h1>野菜詳細</h1>
+<p>野菜名：<%= @plant.name %></p>
+<p>植えた日：<%= @plant.planted_at %></p>
+<p>採取日：<%= @plant.harvested_at %></p>
+<p>メモ：<%= @plant.comment %></p>
+<%= link_to '編集', edit_plant_path(@plant) %>
+<%= link_to '削除', plant_path(@plant), data: { turbo_method: :delete, confirm: '本当に削除しますか？' } %>
+
+<p>一覧へ戻る：<%= link_to '栽培一覧', plants_path %></p>

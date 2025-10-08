@@ -1,0 +1,26 @@
+<h1>編集画面</h1>
+
+<%= form_with model: @plant, url: update_plant_path(@plant.id), method: :patch do |f| %>
+
+  <div>
+    <%= f.label :name, "植物名" %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :planted_at, "植えた日" %>
+    <%= f.date_field :planted_at %>
+  </div>
+
+  <div>
+    <%= f.label :harvested_at, "採取日" %>
+    <%= f.date_field :harvested_at %>
+  </div>
+
+  <div>
+    <%= f.label :comment, "コメント" %>
+    <%= f.text_area :comment %>
+  </div>
+
+  <%= f.submit "更新する" %>
+<% end %>

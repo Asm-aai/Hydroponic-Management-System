@@ -1,0 +1,24 @@
+<h1>新規投稿</h1>
+<%= form_with(model: @plant, data: { turbo: false }) do |f| %>
+  <li>
+    <p>植物名</p>
+    <%= f.text_field :name %>
+  </li>
+
+  <li>
+    <p>植えた日</p>
+    <%= f.date_field :planted_at %>
+  </li>
+
+  <li>
+    <p>採取日</p>
+    <%= f.date_field :harvested_at %>
+  </li>
+
+  <li>
+    <p>コメント</p>
+    <%= f.text_area :comment %>
+  </li>
+	
+  <%= f.submit '投稿' %>
+<% end %>

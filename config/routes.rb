@@ -1,8 +1,15 @@
 Rails.application.routes.draw do
-  get "masurements/new"
-  get "masurements/index"
-  get "masurements/show"
-  get "masurements/edit"
+  # get "plants/new"
+  # get "plants/index"
+  # get "plants/show"
+  # get "plants/edit"
+  resources :plants
+  patch 'plants/:id' => 'plants#update', as: 'update_plant'
+  delete 'plants/:id' => 'plants#destroy', as: 'destroy_plant'
+
+  resources :masurements
+  resources :costs
+  resources :alerts
   # devise_for :admins
   # devise_for :users
   
