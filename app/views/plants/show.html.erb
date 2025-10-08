@@ -1,2 +1,6 @@
-<h1>Plants#show</h1>
-<p>Find me in app/views/plants/show.html.erb</p>
+<h1>野菜詳細</h1>
+<p>野菜名：<%= @plant.name %></p>
+<p>植えた日：<%= @plant.planted_at %></p>
+<p>採取日：<%= @plant.harvested_at %></p>
+<p>メモ：<%= @plant.comment %></p> 
+<p>一覧へ戻る：<%= link_to '栽培一覧', plants_path %></p>

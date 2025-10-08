@@ -4,10 +4,13 @@ class PlantsController < ApplicationController
   end
 
   def create
-    plant = Plant.new(plant_params)
-    plant.save
-    # redirect_to plant_path(@plant.id)
-    render :index
+    @plant = Plant.new(plant_params)
+    if @plant.save
+      redirect_to plants_path
+    else
+      @plants = Plant.all   # ← ここを追加！
+      render :index, status: :unprocessable_entity
+    end
   end
 
   def index
