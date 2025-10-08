@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
-  get "masurements/new"
-  get "masurements/index"
-  get "masurements/show"
-  get "masurements/edit"
+  # get "plants/new"
+  # get "plants/index"
+  # get "plants/show"
+  # get "plants/edit"
+  resources :plants
+
+  resources :masurements
+  resources :costs
+  resources :alerts
   # devise_for :admins
   # devise_for :users
   
