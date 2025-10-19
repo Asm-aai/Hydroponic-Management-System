@@ -1,0 +1,49 @@
+<h1>野菜詳細</h1>
+<p>野菜名：<%= @plant.name %></p>
+<p>植えた日：<%= @plant.planted_at %></p>
+<p>採取日：<%= @plant.harvested_at %></p>
+<p>メモ：<%= @plant.comment %></p>
+<%= link_to '編集', edit_plant_path(@plant) %>
+<%= link_to '削除', plant_path(@plant), data: { turbo_method: :delete, confirm: '本当に削除しますか？' } %>
+
+<p>一覧へ戻る：<%= link_to '栽培一覧', plants_path %></p>
+
+<h2><%= @plant.name %> の詳細</h2>
+
+<!-- 計測値一覧 -->
+<h3>計測値一覧</h3>
+<table>
+  <tr>
+    <th>日付</th>
+    <th>種類</th>
+    <th>値</th>
+  </tr>
+  <% @plant.measurements.each do |m| %>
+    <tr>
+      <td><%= m.measured_at %></td>
+      <td><%= m.measurement_type_i18n %></td>
+      <td><%= m.value %></td>
+    </tr>
+  <% end %>
+</table>
+
+<!-- 計測値フォーム -->
+<h3>新しい計測を追加</h3>
+<%= form_with model: [@plant, Measurement.new], local: true do |f| %>
+  <div>
+    <%= f.label :measurement_type, "種類" %>
+    <%= f.select :measurement_type, Measurement.measurement_types.keys.map { |k| [k, k] } %>
+  </div>
+
+  <div>
+    <%= f.label :value, "値" %>
+    <%= f.number_field :value, step: 0.01 %>
+  </div>
+
+  <div>
+    <%= f.label :measured_at, "計測日" %>
+    <%= f.date_field :measured_at %>
+  </div>
+
+  <%= f.submit "登録する" %>
+<% end %>
