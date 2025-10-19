@@ -1,2 +1,16 @@
-<h1>Masurements#index</h1>
-<p>Find me in app/views/masurements/index.html.erb</p>
+<h2><%= @plant.name %> の計測履歴</h2>
+
+<table>
+  <tr>
+    <th>日付</th>
+    <th>種類</th>
+    <th>値</th>
+  </tr>
+  <% @measurements.each do |m| %>
+    <tr>
+      <td><%= m.measured_at %></td>
+      <td><%= m.measurement_type %></td>
+      <td><%= m.value %></td>
+    </tr>
+  <% end %>
+</table>
