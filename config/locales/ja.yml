@@ -1,0 +1,9 @@
+ja:
+  activerecord:
+    enums:
+      measurement:
+        measurement_type:
+          temperature: "温度"
+          humidity: "湿度"
+          ec: "EC値"
+          ph: "pH"
