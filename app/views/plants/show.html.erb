@@ -32,7 +32,7 @@
 <%= form_with model: [@plant, Measurement.new], local: true do |f| %>
   <div>
     <%= f.label :measurement_type, "種類" %>
-    <%= f.select :measurement_type, Measurement.measurement_types.keys.map { |k| [k, k] } %>
+    <%= f.select :measurement_type, Measurement.measurement_types.keys.map { |k| [I18n.t("activerecord.enums.measurement.measurement_type.#{k}"), k] } %>
   </div>
 
   <div>
