@@ -34,7 +34,6 @@
     <%= f.label :measurement_type, "種類" %>
     <%= f.select :measurement_type, Measurement.measurement_types.keys.map { |k| [I18n.t("activerecord.enums.measurement.measurement_type.#{k}"), k] } %>
   </div>
-
   <div>
     <%= f.label :value, "値" %>
     <%= f.number_field :value, step: 0.01 %>
