@@ -1,1 +1,15 @@
-<h1>ここはTopページです</h1>
+<div class="container text-center py-5">
+  <h1 class="fw-bold mb-4">Hydroponic Management System</h1>
+  <p class="lead mb-5">
+    水耕栽培の環境データを一元管理し、成長を“見える化”するシステムです。
+  </p>
+
+  <div class="d-flex justify-content-center gap-3">
+    <%= link_to '植物一覧を見る', plants_path, class: "btn btn-primary btn-lg" %>
+    <%= link_to '新しい植物を登録', new_plant_path, class: "btn btn-outline-success btn-lg" %>
+  </div>
+
+  <div class="mt-5">
+    <%= image_tag "7192.jpg", alt: "Hydroponic", class: "img-fluid rounded shadow mx-auto d-block", style: "max-width: 90%;" %>
+  </div>
+</div>

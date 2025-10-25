@@ -2,12 +2,13 @@
   <!-- 植物詳細カード -->
   <div class="card mb-4 shadow-sm">
     <div class="card-header">
-      <h1 class="h3 mb-0">野菜詳細：<%= @plant.name %></h1>
+      <h1 class="h3 mb-0"><%= @plant.name %></h1>
     </div>
     <div class="card-body">
-      <p><strong>野菜名：</strong> <%= @plant.name %></p>
       <p><strong>植えた日：</strong> <%= l(@plant.planted_at, format: :long) %></p>
-      <p><strong>採取日：</strong> <%= l(@plant.harvested_at, format: :long) %></p>
+      <% if @plant.harvested_at.present? %>
+        <p><strong>採取日：</strong> <%= l(plant.harvested_at, format: :long) %></p>
+      <% end %>
       <p><strong>メモ：</strong> <%= @plant.comment %></p>
 
       <div class="mt-3">
@@ -31,14 +32,18 @@
             <th>日付</th>
             <th>種類</th>
             <th>値</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <% @plant.measurements.each do |m| %>
             <tr>
-              <td><%= m.measured_at %></td>
+              <td><%= l(m.measured_at, format: :long) %></td>
               <td><%= I18n.t("activerecord.enums.measurement.measurement_type.#{m.measurement_type}") %></td>
               <td><%= m.value %></td>
+              <td><%= link_to '編集', edit_plant_measurement_path(@plant, m), class: "btn btn-sm btn-primary" %></td>
+              <td><%= link_to '削除', plant_measurement_path(@plant, m  ), data: { turbo_method: :delete, confirm: '本当に削除しますか？' }, class: "btn btn-sm btn-danger" %></td>
             </tr>
           <% end %>
         </tbody>
