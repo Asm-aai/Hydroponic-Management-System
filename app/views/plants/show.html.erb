@@ -26,30 +26,37 @@
       <h2 class="h5 mb-0"><%= @plant.name %> の計測値一覧</h2>
     </div>
     <div class="card-body p-0">
-      <table class="table table-striped table-hover mb-0">
-        <thead class="table-dark">
-          <tr>
-            <th>日付</th>
-            <th>種類</th>
-            <th>値</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @plant.measurements.each do |m| %>
+
+      <% if @plant.measurements.any? %>
+        <table class="table table-striped table-hover mb-0">
+          <thead class="table-dark">
             <tr>
-              <td><%= l(m.measured_at, format: :long) %></td>
-              <td><%= I18n.t("activerecord.enums.measurement.measurement_type.#{m.measurement_type}") %></td>
-              <td><%= m.value %></td>
-              <td><%= link_to '編集', edit_plant_measurement_path(@plant, m), class: "btn btn-sm btn-primary" %></td>
-              <td><%= link_to '削除', plant_measurement_path(@plant, m  ), data: { turbo_method: :delete, confirm: '本当に削除しますか？' }, class: "btn btn-sm btn-danger" %></td>
+              <th>日付</th>
+              <th>種類</th>
+              <th>値</th>
+              <th></th>
+              <th></th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @plant.measurements.each do |m| %>
+              <tr>
+                <td><%= l(m.measured_at, format: :long) %></td>
+                <td><%= I18n.t("activerecord.enums.measurement.measurement_type.#{m.measurement_type}") %></td>
+                <td><%= m.value %></td>
+                <td><%= link_to '編集', edit_plant_measurement_path(@plant, m), class: "btn btn-sm btn-primary" %></td>
+                <td><%= link_to '削除', plant_measurement_path(@plant, m  ), data: { turbo_method: :delete, confirm: '本当に削除しますか？' }, class: "btn btn-sm btn-danger" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="p-3 text-center text-muted mb-0">計測値はまだありません。</p>
+      <% end %>
     </div>
   </div>
+  
+
 
   <!-- 計測値フォーム -->
   <div class="card shadow-sm">
@@ -65,12 +72,12 @@
 
         <div class="col-md-4">
           <%= f.label :value, "値", class: "form-label" %>
-          <%= f.number_field :value, step: 0.01, class: "form-control" %>
+          <%= f.number_field :value, step: 0.01, class: "form-control", required: true %>
         </div>
 
         <div class="col-md-4">
           <%= f.label :measured_at, "計測日", class: "form-label" %>
-          <%= f.date_field :measured_at, class: "form-control" %>
+          <%= f.date_field :measured_at, class: "form-control", required: true %>
         </div>
 
         <div class="col-12">

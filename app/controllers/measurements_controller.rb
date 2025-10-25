@@ -1,5 +1,5 @@
 class MeasurementsController < ApplicationController
-  before_action :set_plant
+  before_action :set_plant, except: [:all]
 
   def create
     # @masurement = Masurement.new(measurement_params)
@@ -25,6 +25,17 @@ class MeasurementsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @measurement = Measurement.find(params[:id])
+    @measurement.destroy
+    redirect_to plant_path, notice: "削除しました。"
+  end
+
+  def all
+    @plants = Plant.all
+    @measurements = Measurement.all
   end
 
   private

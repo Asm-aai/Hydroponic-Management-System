@@ -7,10 +7,12 @@ Rails.application.routes.draw do
   patch 'plants/:id' => 'plants#update', as: 'update_plant'
   delete 'plants/:id' => 'plants#destroy', as: 'destroy_plant'
   resources :plants do
-    resources :measurements
+    resources :measurements, only: [:create, :edit, :update, :destroy]
   end
 
-  resources :masurements
+  # resources :masurements, only: [:create, :edit, :update, :destroy]
+  get 'measurements_all', to: 'measurements#all', as: :measurements_all
+
   resources :costs
   resources :alerts
   # devise_for :admins

@@ -13,17 +13,17 @@
 
     <div class="mb-3">
       <%= f.label :value, "値", class: "form-label" %>
-      <%= f.number_field :value, step: 0.01, class: "form-control" %>
+      <%= f.number_field :value, step: 0.01, class: "form-control", required: true %>
     </div>
 
     <div class="mb-3">
       <%= f.label :measured_at, "計測日", class: "form-label" %>
-      <%= f.date_field :measured_at, class: "form-control" %>
+      <%= f.date_field :measured_at, class: "form-control", required: true %>
     </div>
 
     <div class="d-flex gap-2">
       <%= f.submit "更新する", class: "btn btn-primary" %>
-      <%= link_to "キャンセル", plant_path(@plant), class: "btn btn-secondary" %>
+      <%= link_to "キャンセル", "javascript:history.back()", class: "btn btn-secondary" %>
     </div>
   <% end %>
 </div>
