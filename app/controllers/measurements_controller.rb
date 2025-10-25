@@ -1,10 +1,5 @@
 class MeasurementsController < ApplicationController
-  before_action :set_plant
-
-  def new
-    @masurement = Masurement.new
-    @plant = Plant.find(params[:plant_id])
-  end
+  before_action :set_plant, except: [:all]
 
   def create
     # @masurement = Masurement.new(measurement_params)
@@ -16,19 +11,31 @@ class MeasurementsController < ApplicationController
       render "plants/show", status: :unprocessable_entity
     end
   end
-  
-  def index
-    @masurements = Masurement.all
-  end
-
-  def show
-    @masurement = Masurement.find(params[:id])
-    @plant = Plant.find(params[:plant_id])
-  end
 
   def edit
-    @masurement = Masurement.find(params[:id])
+    @measurement = Measurement.find(params[:id])
     @plant = Plant.find(params[:plant_id])
+  end
+
+  def update
+    @measurement = Measurement.find(params[:id])
+    @plant = Plant.find(params[:plant_id])
+    if @measurement.update(measurement_params)
+      redirect_to plant_path(@plant), notice: "計測値を更新しました。"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @measurement = Measurement.find(params[:id])
+    @measurement.destroy
+    redirect_to plant_path, notice: "削除しました。"
+  end
+
+  def all
+    @plants = Plant.all
+    @measurements = Measurement.all
   end
 
   private

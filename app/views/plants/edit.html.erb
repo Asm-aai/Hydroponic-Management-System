@@ -1,26 +1,34 @@
-<h1>編集画面</h1>
+<%= render "shared/error_messages", resource: @plant %>
 
-<%= form_with model: @plant, url: update_plant_path(@plant.id), method: :patch do |f| %>
+<div class="container py-5">
+  <h1 class="mb-4">植物編集</h1>
 
-  <div>
-    <%= f.label :name, "植物名" %>
-    <%= f.text_field :name %>
-  </div>
+  <%= form_with model: @plant, url: update_plant_path(@plant.id), method: :patch, local: true do |f| %>
+    
+    <div class="mb-3">
+      <%= f.label :name, "植物名", class: "form-label" %>
+      <%= f.text_field :name, class: "form-control", required: true %>
+    </div>
 
-  <div>
-    <%= f.label :planted_at, "植えた日" %>
-    <%= f.date_field :planted_at %>
-  </div>
+    <div class="mb-3">
+      <%= f.label :planted_at, "植えた日", class: "form-label" %>
+      <%= f.date_field :planted_at, class: "form-control", required: true %>
+    </div>
 
-  <div>
-    <%= f.label :harvested_at, "採取日" %>
-    <%= f.date_field :harvested_at %>
-  </div>
+    <div class="mb-3">
+      <%= f.label :harvested_at, "採取日", class: "form-label" %>
+      <%= f.date_field :harvested_at, class: "form-control" %>
+    </div>
 
-  <div>
-    <%= f.label :comment, "コメント" %>
-    <%= f.text_area :comment %>
-  </div>
+    <div class="mb-3">
+      <%= f.label :comment, "コメント", class: "form-label" %>
+      <%= f.text_area :comment, class: "form-control", rows: 4, required: true %>
+    </div>
 
-  <%= f.submit "更新する" %>
-<% end %>
+    <div class="d-flex gap-2">
+      <%= f.submit "更新する", class: "btn btn-primary" %>
+      <%= link_to "キャンセル", plant_path(@plant), class: "btn btn-secondary" %>
+    </div>
+
+  <% end %>
+</div>

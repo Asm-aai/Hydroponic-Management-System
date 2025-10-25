@@ -1,1 +1,41 @@
-<h1>ここはAboutページです</h1>
+<div class="container py-5">
+  <h1 class="fw-bold mb-4 text-center">このシステムについて</h1>
+
+  <p class="lead text-center mb-5">
+    Hydroponic Management Systemは、水耕栽培の記録をデジタルで管理し、<br>
+    栽培環境の改善や収穫量の向上をサポートするアプリケーションです。
+  </p>
+
+  <div class="row text-center">
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">🌡️ 計測値の記録</h5>
+          <p class="card-text">温度・湿度・EC・pHを日付ごとに記録し、後から確認できます。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">📈 成長の可視化</h5>
+          <p class="card-text">グラフ機能を使って環境の変化を可視化し、栽培精度を向上します。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">💾 データの一元管理</h5>
+          <p class="card-text">複数の植物をまとめて管理し、記録の手間を軽減します。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-5">
+    <%= link_to 'トップページに戻る', root_path, class: "btn btn-outline-primary" %>
+  </div>
+</div>
