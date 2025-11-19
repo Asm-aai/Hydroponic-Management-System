@@ -73,9 +73,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_14_130112) do
 
   create_table "measurements", force: :cascade do |t|
     t.integer "plant_id", null: false
-    t.integer "measurement_type"
-    t.decimal "value"
+    t.decimal "temperature"
+    t.decimal "humidity"
+    t.decimal "ec"
+    t.decimal "ph"
+    t.decimal "CO2"
     t.date "measured_at"
+    t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["plant_id"], name: "index_measurements_on_plant_id"
