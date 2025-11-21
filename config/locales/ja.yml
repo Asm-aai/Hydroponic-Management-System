@@ -21,3 +21,11 @@ ja:
       default: ! '%Y/%m/%d'
       long: ! '%Y年%-m月%-d日(%a)'
       short: ! '%m/%d'
+  devise:
+    sessions:
+      admin:
+        signed_in: "管理者としてログインしました"
+        signed_out: "管理者としてログアウトしました"
+    failure:
+      admin:
+        not_found_in_database: "管理者が見つかりません"

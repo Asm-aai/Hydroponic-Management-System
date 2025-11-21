@@ -6,21 +6,27 @@
       <thead class="table-dark">
         <tr>
           <th>植物名</th>
-          <th>計測種類</th>
-          <th>値</th>
           <th>計測日</th>
-          <th></th>
+          <th>温度</th>
+          <th>湿度</th>
+          <th>EC</th>
+          <th>pH</th>
+          <th>CO2</th>
+          <th>操作</th>
         </tr>
       </thead>
       <tbody>
         <% @measurements.each do |m| %>
           <tr>
             <td><%= m.plant.name %></td>
-            <td><%= I18n.t("activerecord.enums.measurement.measurement_type.#{m.measurement_type}") %></td>
-            <td><%= m.value %></td>
             <td><%= l(m.measured_at, format: :long) %></td>
+            <td><%= m.temperature %></td>
+            <td><%= m.humidity %></td>
+            <td><%= m.ec %></td>
+            <td><%= m.ph %></td>
+            <td><%= m.CO2 %></td>
             <td>
-              <%= link_to '編集', edit_plant_measurement_path(m.plant, m), class: "btn btn-sm btn-outline-secondary" %>
+              <%= link_to '編集', edit_admin_plant_measurement_path(m.plant, m), class: "btn btn-sm btn-outline-secondary" %>
             </td>
           </tr>
         <% end %>

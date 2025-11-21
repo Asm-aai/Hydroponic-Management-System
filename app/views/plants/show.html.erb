@@ -48,6 +48,10 @@
                 <td><%= m.ec %></td>
                 <td><%= m.ph %></td>
                 <td><%= m.CO2 %></td>
+                <td>
+                  <%= link_to '編集', edit_admin_plant_measurement_path(@plant, m), class: "btn btn-sm btn-outline-secondary me-2" %>
+                  <%= link_to '削除', admin_plant_measurement_path(@plant, m), data: { turbo_method: :delete, confirm: '本当に削除しますか？' }, class: "btn btn-sm btn-outline-danger" %>
+                </td>
               </tr>
             <% end %>
           </tbody>
@@ -65,46 +69,48 @@
     <div class="card-header">
       <h3 class="h5 mb-0">新しい計測を追加</h3>
     </div>
-    <div class="card-body">
-      <%= form_with url: plant_measurements_path(@plant), local: true, class: "row g-3" do |f| %>
+    <% if admin_signed_in? %>
+      <div class="card-body">
+        <%= form_with url: admin_plant_measurements_path(@plant), local: true, class: "row g-3" do |f| %>
 
-        <div class="col-md-4">
-          <%= label_tag "measurement[temperature]", "温度", class: "form-label" %>
-          <%= number_field_tag "measurement[temperature]", nil, step: 0.01, class: "form-control" %>
-        </div>
+          <div class="col-md-4">
+            <%= label_tag "measurement[temperature]", "温度", class: "form-label" %>
+            <%= number_field_tag "measurement[temperature]", nil, step: 0.01, class: "form-control" %>
+          </div>
 
-        <div class="col-md-4">
-          <%= label_tag "measurement[humidity]", "湿度", class: "form-label" %>
-          <%= number_field_tag "measurement[humidity]", nil, step: 0.01, class: "form-control" %>
-        </div>
+          <div class="col-md-4">
+            <%= label_tag "measurement[humidity]", "湿度", class: "form-label" %>
+            <%= number_field_tag "measurement[humidity]", nil, step: 0.01, class: "form-control" %>
+          </div>
 
-        <div class="col-md-4">
-          <%= label_tag "measurement[ec]", "EC", class: "form-label" %>
-          <%= number_field_tag "measurement[ec]", nil, step: 0.01, class: "form-control" %>
-        </div>
+          <div class="col-md-4">
+            <%= label_tag "measurement[ec]", "EC", class: "form-label" %>
+            <%= number_field_tag "measurement[ec]", nil, step: 0.01, class: "form-control" %>
+          </div>
 
-        <div class="col-md-4">
-          <%= label_tag "measurement[ph]", "pH", class: "form-label" %>
-          <%= number_field_tag "measurement[ph]", nil, step: 0.01, class: "form-control" %>
-        </div>
+          <div class="col-md-4">
+            <%= label_tag "measurement[ph]", "pH", class: "form-label" %>
+            <%= number_field_tag "measurement[ph]", nil, step: 0.01, class: "form-control" %>
+          </div>
 
-        <div class="col-md-4">
-          <%= label_tag "measurement[co2]", "CO2", class: "form-label" %>
-          <%= number_field_tag "measurement[co2]", nil, step: 0.01, class: "form-control" %>
-        </div>
+          <div class="col-md-4">
+            <%= label_tag "measurement[co2]", "CO2", class: "form-label" %>
+            <%= number_field_tag "measurement[CO2]", nil, step: 0.01, class: "form-control" %>
+          </div>
 
-        <div class="col-md-4">
-          <%= label_tag "measurement[measured_at]", "計測日", class: "form-label" %>
-          <%= date_field_tag "measurement[measured_at]", Date.today, class: "form-control", required: true %>
-          
-        </div>
+          <div class="col-md-4">
+            <%= label_tag "measurement[measured_at]", "計測日", class: "form-label" %>
+            <%= date_field_tag "measurement[measured_at]", Date.today, class: "form-control", required: true %>
+            
+          </div>
 
-        <div class="col-12">
-          <%= submit_tag "登録する", class: "btn btn-success mt-2" %>
-        </div>
+          <div class="col-12">
+            <%= submit_tag "登録する", class: "btn btn-success mt-2" %>
+          </div>
 
-      <% end %>
-    </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
   
 </div>
