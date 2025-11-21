@@ -25,10 +25,11 @@ Rails.application.routes.draw do
     resources :plants do
       resources :measurements, only: [:create, :edit, :update, :destroy]
     end
+    get 'measurements_all', to: 'measurements#all', as: :measurements_all
   end
   #単数形？
   
-  get 'measurements_all', to: 'measurements#all', as: :measurements_all
+  # get 'measurements_all', to: 'measurements#all', as: :measurements_all
   resources :plants, only: [:index, :show]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
