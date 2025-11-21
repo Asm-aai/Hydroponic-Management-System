@@ -6,17 +6,9 @@ Rails.application.routes.draw do
   resources :plants
   patch 'plants/:id' => 'plants#update', as: 'update_plant'
   delete 'plants/:id' => 'plants#destroy', as: 'destroy_plant'
-  resources :plants do
-    resources :measurements, only: [:create, :edit, :update, :destroy]
-  end
-
-  # resources :masurements, only: [:create, :edit, :update, :destroy]
-  get 'measurements_all', to: 'measurements#all', as: :measurements_all
 
   resources :costs
   resources :alerts
-  # devise_for :admins
-  # devise_for :users
   
   devise_for :users, controllers: {
     registrations: 'public/registrations',
@@ -24,11 +16,20 @@ Rails.application.routes.draw do
   }
   #単数形？
 
-  devise_for :admins, controllers: {
-    registrations: 'admins/registrations',
-    sessions: 'admins/sessions'
+  devise_for :admin, controllers: {
+    registrations: 'admin/registrations',
+    sessions: 'admin/sessions',
   } 
+  
+  namespace :admin do
+    resources :plants do
+      resources :measurements, only: [:create, :edit, :update, :destroy]
+    end
+  end
   #単数形？
+  
+  get 'measurements_all', to: 'measurements#all', as: :measurements_all
+  resources :plants, only: [:index, :show]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root to: "homes#top"
