@@ -1,4 +1,4 @@
-class Admin::MeasurementsController < ApplicationController
+class Admin::MeasurementsController < Admin::ApplicationController
   before_action :set_plant, except: [:all]
 
   def create
