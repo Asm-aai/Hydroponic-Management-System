@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_06_011008) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_06_064327) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -102,6 +102,26 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_06_011008) do
     t.index ["plant_id"], name: "index_measurements_on_plant_id"
   end
 
+  create_table "order_items", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.integer "plant_id", null: false
+    t.integer "quantity", null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["plant_id"], name: "index_order_items_on_plant_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.decimal "total_price", precision: 10, scale: 2
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "plants", force: :cascade do |t|
     t.string "name"
     t.date "planted_at"
@@ -132,4 +152,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_06_011008) do
   add_foreign_key "carts", "users"
   add_foreign_key "costs", "plants"
   add_foreign_key "measurements", "plants"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "plants"
+  add_foreign_key "orders", "users"
 end
