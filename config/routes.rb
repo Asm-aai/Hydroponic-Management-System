@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "cart/show"
   # get "plants/new"
   # get "plants/index"
   # get "plants/show"
@@ -15,6 +16,8 @@ Rails.application.routes.draw do
     sessions: 'public/sessions'
   }
   #単数形？
+  resource :carts, only: [:show]
+  resources :cart_items, only: [:create, :update, :destroy]
 
   devise_for :admin, controllers: {
     registrations: 'admin/registrations',

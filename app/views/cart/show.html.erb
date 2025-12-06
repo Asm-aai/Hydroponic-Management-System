@@ -1,0 +1,30 @@
+<h2>カート</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>商品</th>
+      <th>数量</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @cart.cart_items.each do |item| %>
+      <tr>
+        <td><%= item.plant.name %></td>
+
+        <td>
+          <%= form_with url: cart_item_path(item), method: :patch do %>
+            <%= number_field_tag :quantity, item.quantity, min: 1 %>
+            <%= submit_tag "更新" %>
+          <% end %>
+        </td>
+
+        <td>
+          <%= button_to "削除", cart_item_path(item), method: :delete, class: "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
