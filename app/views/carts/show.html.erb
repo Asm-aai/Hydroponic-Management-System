@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container my-5">
   <div class="card shadow-sm">
     <div class="card-header bg-success text-white">
       <h4 class="mb-0">カート</h4>
@@ -11,9 +11,11 @@
         <table class="table table-striped align-middle">
           <thead class="table-dark">
             <tr>
-              <th style="width: 40%">商品</th>
-              <th style="width: 25%">数量</th>
-              <th style="width: 35%">操作</th>
+              <th style="width: 30%">商品</th>
+              <th style="width: 15%">単価</th>
+              <th style="width: 20%">数量</th>
+              <th style="width: 20%">小計</th>
+              <th style="width: 15%">操作</th>
             </tr>
           </thead>
 
@@ -24,6 +26,12 @@
                   <%= item.plant.name %>
                 </td>
 
+                <!-- ▼ 単価 -->
+                <td>
+                  <%= number_to_currency(item.plant.price.to_i, precision: 0) %>
+                </td>
+
+                <!-- ▼ 数量更新フォーム -->
                 <td>
                   <%= form_with url: cart_item_path(item), method: :patch, local: true, class: "d-flex gap-2" do %>
                     <%= number_field_tag :quantity, item.quantity, min: 1, class: "form-control w-50" %>
@@ -31,6 +39,12 @@
                   <% end %>
                 </td>
 
+                <!-- ▼ 小計（単価 × 数量） -->
+                <td class="fw-bold">
+                  <%= number_to_currency(item.plant.price.to_i * item.quantity, precision: 0) %>
+                </td>
+
+                <!-- ▼ 削除 -->
                 <td>
                   <%= button_to "削除",
                         cart_item_path(item),
@@ -43,7 +57,14 @@
           </tbody>
         </table>
 
-        <div class="text-end mt-3">
+        <!-- ▼ 全体合計 -->
+        <div class="text-end fw-bold fs-5 mt-4">
+          合計金額：
+          <%= number_to_currency(@cart.cart_items.sum { |i| i.plant.price.to_i * i.quantity },
+                                 precision: 0) %>
+        </div>
+
+        <div class="text-end mt-4">
           <%= link_to "注文手続きへ進む", new_order_path, class: "btn btn-success btn-lg" %>
         </div>
 
