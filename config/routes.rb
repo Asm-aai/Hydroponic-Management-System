@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   #単数形？
   resource :cart, only: [:show]
   resources :cart_items, only: [:create, :update, :destroy]
+  resources :orders, only: [:new, :create, :index, :show]
 
   devise_for :admin, controllers: {
     registrations: 'admin/registrations',

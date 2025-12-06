@@ -1,0 +1,18 @@
+<div class="container mt-5">
+  <h3>注文履歴</h3>
+
+  <% if @orders.any? %>
+    <div class="list-group">
+      <% @orders.each do |order| %>
+        <a href="<%= order_path(order) %>" class="list-group-item list-group-item-action">
+          <div class="d-flex justify-content-between">
+            <span>注文番号: <%= order.id %></span>
+            <span><%= l(order.created_at, format: :short) %></span>
+          </div>
+        </a>
+      <% end %>
+    </div>
+  <% else %>
+    <p>注文履歴がありません。</p>
+  <% end %>
+</div>

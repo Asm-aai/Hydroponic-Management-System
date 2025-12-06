@@ -1,0 +1,37 @@
+<div class="container my-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">注文内容の確認</h4>
+    </div>
+
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead class="table-dark">
+          <tr>
+            <th>商品</th>
+            <th>数量</th>
+            <th>価格</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @cart.cart_items.each do |item| %>
+            <tr>
+              <td><%= item.plant.name %></td>
+              <td><%= item.quantity %></td>
+              <td><%= item.plant.price %> 円</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div class="text-end fw-bold fs-5">
+        合計金額：<%= @cart.cart_items.sum { |i| i.plant.price * i.quantity } %> 円
+      </div>
+
+      <div class="text-end mt-4">
+        <%= button_to "注文を確定する", orders_path, method: :post, class: "btn btn-success btn-lg" %>
+      </div>
+    </div>
+  </div>
+</div>
