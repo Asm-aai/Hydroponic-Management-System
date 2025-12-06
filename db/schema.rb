@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_14_130112) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_06_011008) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -62,6 +62,23 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_14_130112) do
     t.index ["measurement_id"], name: "index_alerts_on_measurement_id"
   end
 
+  create_table "cart_items", force: :cascade do |t|
+    t.integer "cart_id", null: false
+    t.integer "plant_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["plant_id"], name: "index_cart_items_on_plant_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
   create_table "costs", force: :cascade do |t|
     t.integer "plant_id", null: false
     t.string "item_name"
@@ -110,6 +127,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_14_130112) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "alerts", "measurements"
+  add_foreign_key "cart_items", "carts"
+  add_foreign_key "cart_items", "plants"
+  add_foreign_key "carts", "users"
   add_foreign_key "costs", "plants"
   add_foreign_key "measurements", "plants"
 end

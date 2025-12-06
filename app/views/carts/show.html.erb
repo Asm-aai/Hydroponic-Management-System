@@ -1,0 +1,60 @@
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-success text-white">
+      <h4 class="mb-0">カート</h4>
+    </div>
+
+    <div class="card-body">
+
+      <% if @cart.cart_items.any? %>
+
+        <table class="table table-striped align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th style="width: 40%">商品</th>
+              <th style="width: 25%">数量</th>
+              <th style="width: 35%">操作</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @cart.cart_items.each do |item| %>
+              <tr>
+                <td class="fw-bold">
+                  <%= item.plant.name %>
+                </td>
+
+                <td>
+                  <%= form_with url: cart_item_path(item), method: :patch, local: true, class: "d-flex gap-2" do %>
+                    <%= number_field_tag :quantity, item.quantity, min: 1, class: "form-control w-50" %>
+                    <%= submit_tag "更新", class: "btn btn-primary" %>
+                  <% end %>
+                </td>
+
+                <td>
+                  <%= button_to "削除",
+                        cart_item_path(item),
+                        method: :delete,
+                        class: "btn btn-danger",
+                        form: { data: { turbo_confirm: "本当に削除しますか？" } } %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <div class="text-end mt-3">
+          <%= link_to "注文手続きへ進む", new_order_path, class: "btn btn-success btn-lg" %>
+        </div>
+
+      <% else %>
+
+        <p class="text-center text-muted my-4">
+          カートに商品がありません。
+        </p>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>

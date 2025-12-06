@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  # get "plants/new"
-  # get "plants/index"
-  # get "plants/show"
-  # get "plants/edit"
+  get "cart/show"
   resources :plants
   patch 'plants/:id' => 'plants#update', as: 'update_plant'
   delete 'plants/:id' => 'plants#destroy', as: 'destroy_plant'
@@ -15,6 +12,8 @@ Rails.application.routes.draw do
     sessions: 'public/sessions'
   }
   #単数形？
+  resource :cart, only: [:show]
+  resources :cart_items, only: [:create, :update, :destroy]
 
   devise_for :admin, controllers: {
     registrations: 'admin/registrations',
