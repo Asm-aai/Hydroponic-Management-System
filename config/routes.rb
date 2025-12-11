@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   } 
   
   namespace :admin do
+    resources :orders, only: [:index, :show]
     resources :plants do
       resources :measurements, only: [:create, :edit, :update, :destroy]
     end
