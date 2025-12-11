@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
 
     order = current_user.orders.create!(
       total_price: calculate_total(cart),
-      status: pending
+      status: 0
     )
 
     cart.cart_items.each do |item|
