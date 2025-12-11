@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h2>注文履歴</h2>
+
+  <% if @orders.any? %>
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>注文番号</th>
+          <% if admin_signed_in? %>
+            <th>ユーザー名</th>
+          <% end %>
+          <th>注文日</th>
+          <th>合計金額</th>
+          <th>ステータス</th>
+          <th>詳細</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td><%= order.id %></td>
+            <% if admin_signed_in? %>
+              <td><%= order.user.name %></td>
+            <% end %>
+            <td><%= l(order.created_at, format: :short) %></td>
+            <td><%= number_to_currency(order.total_price) %></td>
+            <td><%= order.status %></td>
+            <td>
+              <%= link_to "詳細", order_path(order), class: "btn btn-sm btn-primary" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p class="text-muted mt-4">注文履歴はありません。</p>
+  <% end %>
+</div>
