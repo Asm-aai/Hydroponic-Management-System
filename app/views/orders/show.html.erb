@@ -21,7 +21,7 @@
         <tbody>
           <% @order.order_items.each do |item| %>
             <tr>
-              <td><%= item.plant.name %></td>
+              <td><%= link_to item.plant.name, plant_path(item.plant), style: "color: black;" %></td>
               <td><%= item.quantity %></td>
               <td><%= item.price %> 円</td>
             </tr>
