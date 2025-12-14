@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       resources :measurements, only: [:create, :edit, :update, :destroy]
     end
     get 'measurements_all', to: 'measurements#all', as: :measurements_all
+    root to: "admins#my_page"
   end
   #単数形？
   
