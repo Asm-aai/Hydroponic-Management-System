@@ -1,0 +1,79 @@
+<div class="container my-4" style="max-width: 900px;">
+
+  <h2 class="mb-4">管理者マイページ</h2>
+
+  <div class="row">
+
+    <!-- 管理メニュー -->
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+          管理メニュー
+        </div>
+
+        <div class="card-body">
+          <div class="row g-3">
+
+            <div class="col-md-6">
+              <%= link_to admin_orders_path,
+                    class: "text-decoration-none" do %>
+                <div class="card h-100 border-primary">
+                  <div class="card-body">
+                    <h5 class="card-title">注文管理</h5>
+                    <p class="card-text text-muted">
+                      注文一覧・詳細・ステータス管理
+                    </p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="col-md-6">
+              <%= link_to plants_path,
+                    class: "text-decoration-none" do %>
+                <div class="card h-100 border-success">
+                  <div class="card-body">
+                    <h5 class="card-title">植物管理</h5>
+                    <p class="card-text text-muted">
+                      植物・栽培情報の管理
+                    </p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="col-md-6">
+              <%= link_to admin_measurements_all_path,
+                    class: "text-decoration-none" do %>
+                <div class="card h-100 border-warning">
+                  <div class="card-body">
+                    <h5 class="card-title">測定データ一覧</h5>
+                    <p class="card-text text-muted">
+                      全植物の測定データを確認
+                    </p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="col-md-6">
+              <%= link_to admin_root_path,
+                    class: "text-decoration-none" do %>
+                <div class="card h-100 border-secondary">
+                  <div class="card-body">
+                    <h5 class="card-title">ダッシュボード(仮)</h5>
+                    <p class="card-text text-muted">
+                      売上・注文状況の確認
+                    </p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
