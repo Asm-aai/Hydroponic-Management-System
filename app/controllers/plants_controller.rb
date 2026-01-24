@@ -1,4 +1,5 @@
 class PlantsController < ApplicationController
+  before_action :authenticate_admin!, only: [ :create ]
   def new
     @plant = Plant.new
   end
