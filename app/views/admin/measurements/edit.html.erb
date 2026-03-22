@@ -1,0 +1,45 @@
+<!-- app/views/measurements/edit.html.erb -->
+<%= render "shared/error_messages", resource: @measurement %>
+
+<div class="container py-5">
+  <h2 class="mb-4">計測値を編集</h2>
+
+  <%= form_with model: [@plant, @measurement], url: admin_plant_measurement_path(@plant, @measurement), method: :patch, local: true do |f| %>
+
+    <div class="mb-3">
+      <%= f.label :temperature, "温度", class: "form-label" %>
+      <%= f.number_field :temperature, step: 0.1, class: "form-control", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :humidity, "湿度", class: "form-label" %>
+      <%= f.number_field :humidity, step: 0.1, class: "form-control", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :ec, "EC", class: "form-label" %>
+      <%= f.number_field :ec, step: 0.01, class: "form-control", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :ph, "pH", class: "form-label" %>
+      <%= f.number_field :ph, step: 0.01, class: "form-control", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :CO2, "CO2", class: "form-label" %>
+      <%= f.number_field :CO2, step: 1, class: "form-control", required: true %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :measured_at, "計測日", class: "form-label" %>
+      <%= f.date_field :measured_at, class: "form-control", required: true %>
+    </div>
+
+    <div class="d-flex gap-2">
+      <%= f.submit "更新する", class: "btn btn-primary" %>
+      <%= link_to "キャンセル", "javascript:history.back()", class: "btn btn-secondary" %>
+    </div>
+
+  <% end %>
+</div>

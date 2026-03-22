@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
-  # get "plants/new"
-  # get "plants/index"
-  # get "plants/show"
-  # get "plants/edit"
+  get "cart/show"
   resources :plants
   patch "plants/:id" => "plants#update", as: "update_plant"
   delete "plants/:id" => "plants#destroy", as: "destroy_plant"
@@ -32,6 +29,28 @@ Rails.application.routes.draw do
     sessions: "admins/sessions"
   }
   # 単数形？
+  # 単数形？
+  resource :cart, only: [ :show ]
+  resources :cart_items, only: [ :create, :update, :destroy ]
+  resources :orders, only: [ :new, :create, :index, :show ]
+
+  devise_for :admin, controllers: {
+    registrations: "admin/registrations",
+    sessions: "admin/sessions"
+  }
+
+  namespace :admin do
+    resources :orders, only: [ :index, :show ]
+    resources :plants do
+      resources :measurements, only: [ :create, :edit, :update, :destroy ]
+    end
+    get "measurements_all", to: "measurements#all", as: :measurements_all
+    root to: "admins#my_page"
+  end
+  # 単数形？
+
+  # get 'measurements_all', to: 'measurements#all', as: :measurements_all
+  resources :plants, only: [ :index, :show ]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root to: "homes#top"

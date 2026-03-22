@@ -1,4 +1,5 @@
 class PlantsController < ApplicationController
+  before_action :authenticate_admin!, only: [ :create ]
   def new
     @plant = Plant.new
   end
@@ -48,6 +49,6 @@ class PlantsController < ApplicationController
 
   private
   def plant_params
-    params.require(:plant).permit(:name, :planted_at, :harvested_at, :comment)
+    params.require(:plant).permit(:name, :planted_at, :harvested_at, :comment, :price)
   end
 end

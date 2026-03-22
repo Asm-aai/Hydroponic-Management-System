@@ -1,26 +1,43 @@
-<h2>ログイン</h2>
+<div class="container my-5" style="max-width: 420px;">
+  <div class="card shadow-sm">
+    <div class="card-body">
 
-<%= form_with model: @user, url: user_session_path do |f| %>
-  <div class="field">
-    <%= f.label :email, "メールアドレス" %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+      <h2 class="text-center mb-4">ログイン</h2>
 
-  <div class="field">
-    <%= f.label :password, "パスワード" %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+      <%= form_with model: @user, url: user_session_path, local: true do |f| %>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me, "ログインを継続する" %>
+        <div class="mb-3">
+          <%= f.label :email, "メールアドレス", class: "form-label" %>
+          <%= f.email_field :email,
+                autofocus: true,
+                autocomplete: "email",
+                class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :password, "パスワード", class: "form-label" %>
+          <%= f.password_field :password,
+                autocomplete: "current-password",
+                class: "form-control" %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="form-check mb-3">
+            <%= f.check_box :remember_me, class: "form-check-input" %>
+            <%= f.label :remember_me, "ログインを継続する", class: "form-check-label" %>
+          </div>
+        <% end %>
+
+        <div class="d-grid mb-3">
+          <%= f.submit "ログイン", class: "btn btn-success" %>
+        </div>
+
+      <% end %>
+
+      <div class="text-center">
+        <%= render "public/shared/links" %>
+      </div>
+
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "ログイン" %>
   </div>
-<% end %>
-
-<%= render "public/shared/links" %>
+</div>

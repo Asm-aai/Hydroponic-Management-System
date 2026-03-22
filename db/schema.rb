@@ -143,6 +143,26 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_22_110939) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
+  create_table "order_items", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.integer "plant_id", null: false
+    t.integer "quantity", null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["plant_id"], name: "index_order_items_on_plant_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.decimal "total_price", precision: 10, scale: 2
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
   create_table "plants", force: :cascade do |t|
     t.string "name"
     t.date "planted_at"
@@ -173,6 +193,10 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_22_110939) do
   add_foreign_key "cart_items", "plants"
   add_foreign_key "carts", "users"
   add_foreign_key "costs", "plants"
+<<<<<<< HEAD
+=======
+  add_foreign_key "measurements", "plants"
+>>>>>>> d73354acd91d9a7ad2d330b91ef7f863da562c59
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "plants"
   add_foreign_key "orders", "users"

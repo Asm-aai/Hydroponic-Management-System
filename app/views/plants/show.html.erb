@@ -10,11 +10,24 @@
         <p><strong>採取日：</strong> <%= l(plant.harvested_at, format: :long) %></p>
       <% end %>
       <p><strong>メモ：</strong> <%= @plant.comment %></p>
+      <p><strong>価格：</strong> <%= @plant.price %> 円</p>
 
-      <div class="mt-3">
-        <%= link_to '編集', edit_plant_path(@plant), class: "btn btn-primary me-2" %>
-        <%= link_to '削除', plant_path(@plant), data: { turbo_method: :delete, confirm: '本当に削除しますか？' }, class: "btn btn-danger" %>
-      </div>
+      <% if user_signed_in? %>
+        <%= form_with url: cart_items_path, method: :post do %>
+          <%= hidden_field_tag :plant_id, @plant.id %>
+
+          <div class="mb-3">
+            <%= number_field_tag :quantity, 1, min: 1, class: "form-control" %>
+          </div>
+
+          <%= submit_tag "カートに入れる", class: "btn btn-primary" %>
+        <% end %>
+      <% elsif admin_signed_in? %>
+        <div class="mt-3">
+          <%= link_to '編集', edit_plant_path(@plant), class: "btn btn-primary me-2" %>
+          <%= link_to '削除', plant_path(@plant), data: { turbo_method: :delete, confirm: '本当に削除しますか？' }, class: "btn btn-danger" %>
+        </div>
+      <% end %>
     </div>
   </div>
 

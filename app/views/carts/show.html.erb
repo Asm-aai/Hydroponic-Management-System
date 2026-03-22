@@ -1,0 +1,81 @@
+<div class="container my-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-success text-white">
+      <h4 class="mb-0">カート</h4>
+    </div>
+
+    <div class="card-body">
+
+      <% if @cart.cart_items.any? %>
+
+        <table class="table table-striped align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th style="width: 30%">商品</th>
+              <th style="width: 15%">単価</th>
+              <th style="width: 20%">数量</th>
+              <th style="width: 20%">小計</th>
+              <th style="width: 15%">操作</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @cart.cart_items.each do |item| %>
+              <tr>
+                <td class="fw-bold">
+                  <%= item.plant.name %>
+                </td>
+
+                <!-- ▼ 単価 -->
+                <td>
+                  <%= number_to_currency(item.plant.price.to_i, precision: 0) %>
+                </td>
+
+                <!-- ▼ 数量更新フォーム -->
+                <td>
+                  <%= form_with url: cart_item_path(item), method: :patch, local: true, class: "d-flex gap-2" do %>
+                    <%= number_field_tag :quantity, item.quantity, min: 1, class: "form-control w-50" %>
+                    <%= submit_tag "更新", class: "btn btn-primary" %>
+                  <% end %>
+                </td>
+
+                <!-- ▼ 小計（単価 × 数量） -->
+                <td class="fw-bold">
+                  <%= number_to_currency(item.plant.price.to_i * item.quantity, precision: 0) %>
+                </td>
+
+                <!-- ▼ 削除 -->
+                <td>
+                  <%= button_to "削除",
+                        cart_item_path(item),
+                        method: :delete,
+                        class: "btn btn-danger",
+                        form: { data: { turbo_confirm: "本当に削除しますか？" } } %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <!-- ▼ 全体合計 -->
+        <div class="text-end fw-bold fs-5 mt-4">
+          合計金額：
+          <%= number_to_currency(@cart.cart_items.sum { |i| i.plant.price.to_i * i.quantity },
+                                 precision: 0) %>
+        </div>
+
+        <div class="text-end mt-4">
+          <%= link_to "注文手続きへ進む", new_order_path, class: "btn btn-success btn-lg" %>
+        </div>
+
+      <% else %>
+
+        <p class="text-center text-muted my-4">
+          カートに商品がありません。
+        </p>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>

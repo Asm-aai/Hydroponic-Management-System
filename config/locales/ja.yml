@@ -15,6 +15,9 @@ ja:
           humidity: 湿度
           ec: EC値
           ph: pH
+    attributes:
+      user:
+        argument_term: 利用規約とプライバシーポリシー
   date:
     abbr_day_names: [日, 月, 火, 水, 木, 金, 土]
     formats:

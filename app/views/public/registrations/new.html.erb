@@ -1,35 +1,64 @@
-<h2>ユーザー登録</h2>
+<div class="container mt-5" style="max-width: 480px;">
+  <div class="card shadow-sm">
+    <div class="card-body">
 
-<%= form_with model: @user, url: user_registration_path do |f| %>
-  <%= render "public/shared/error_messages", resource: resource %>
+      <h2 class="text-center mb-4">ユーザー登録</h2>
 
-  <div class="field">
-    <%= f.label :name, "名前" %><br>
-    <%= f.text_field :name %>
+      <%= form_with model: @user, url: user_registration_path, local: true do |f| %>
+        <%= render "public/shared/error_messages", resource: resource %>
+
+        <div class="mb-3">
+          <%= f.label :name, "名前", class: "form-label" %>
+          <%= f.text_field :name, class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :email, "メールアドレス", class: "form-label" %>
+          <%= f.email_field :email,
+                autofocus: true,
+                autocomplete: "email",
+                class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :password, "パスワード", class: "form-label" %>
+          <% if @minimum_password_length %>
+            <div class="form-text">
+              （<%= @minimum_password_length %>文字以上）
+            </div>
+          <% end %>
+          <%= f.password_field :password,
+                autocomplete: "new-password",
+                class: "form-control" %>
+        </div>
+
+        <div class="mb-4">
+          <%= f.label :password_confirmation, "パスワード（再）", class: "form-label" %>
+          <%= f.password_field :password_confirmation,
+                autocomplete: "new-password",
+                class: "form-control" %>
+        </div>
+
+        <div class="form-check mb-4">
+          <%= f.check_box :argument_term,
+                class: "form-check-input",
+                id: "argument_term" %>
+          <%= f.label :argument_term,
+                "利用規約とプライバシーポリシーに同意します。",
+                class: "form-check-label",
+                for: "argument_term" %>
+        </div>
+
+        <div class="d-grid mb-3">
+          <%= f.submit "登録", class: "btn btn-success" %>
+        </div>
+
+      <% end %>
+
+      <div class="text-center">
+        <%= render "public/shared/links" %>
+      </div>
+
+    </div>
   </div>
-  
-  <div class="field">
-    <%= f.label :email, "メールアドレス" %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password, "パスワード" %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation, "パスワード(再)" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "登録" %>
-  </div>
-<% end %>
-
-<%= render "public/shared/links" %>
-
+</div>

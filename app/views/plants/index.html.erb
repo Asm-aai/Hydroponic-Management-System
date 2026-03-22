@@ -12,10 +12,13 @@
           <p><strong>採取日：</strong> <%= l(plant.harvested_at, format: :long) %></p>
         <% end %>
         <p><strong>コメント：</strong> <%= plant.comment %></p>
+        <p><strong>価格：</strong> <%= plant.price %> 円</p>
 
         <div class="mt-2">
           <%= link_to '詳細を見る', plant_path(plant), class: "btn btn-outline-primary btn-sm me-2" %>
-          <%= link_to '編集', edit_plant_path(plant), class: "btn btn-outline-secondary btn-sm" %>
+          <% if admin_signed_in? %>
+            <%= link_to '編集', edit_plant_path(plant), class: "btn btn-outline-secondary btn-sm" %>
+          <% end %>
         </div>
       </div>
     </div>
@@ -24,5 +27,4 @@
   <p class="mt-4">総栽培数: <strong><%= @plants.count %></strong> 件</p>
 
   <p><%= link_to '新しい栽培を追加', new_plant_path, class: "btn btn-success mt-3" %></p>
-  <p><%= link_to '全計測値一覧', measurements_all_path, class: "btn btn-info mt-3"%></p>
 </div>
