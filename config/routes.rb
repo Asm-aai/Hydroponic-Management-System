@@ -15,8 +15,6 @@ Rails.application.routes.draw do
 
   resources :costs
   resources :alerts
-  # devise_for :admins
-  # devise_for :users
 
   devise_for :users, controllers: {
     registrations: "public/registrations",
@@ -29,15 +27,9 @@ Rails.application.routes.draw do
     sessions: "admins/sessions"
   }
   # 単数形？
-  # 単数形？
   resource :cart, only: [ :show ]
   resources :cart_items, only: [ :create, :update, :destroy ]
   resources :orders, only: [ :new, :create, :index, :show ]
-
-  devise_for :admin, controllers: {
-    registrations: "admin/registrations",
-    sessions: "admin/sessions"
-  }
 
   namespace :admin do
     resources :orders, only: [ :index, :show ]
@@ -65,5 +57,4 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  # root "posts#index"
 end
