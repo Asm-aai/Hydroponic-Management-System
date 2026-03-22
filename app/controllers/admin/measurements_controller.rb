@@ -1,5 +1,10 @@
+<<<<<<< HEAD:app/controllers/measurements_controller.rb
+class MeasurementsController < ApplicationController
+  before_action :set_plant, except: [ :all ]
+=======
 class Admin::MeasurementsController < Admin::ApplicationController
   before_action :set_plant, except: [:all]
+>>>>>>> d73354acd91d9a7ad2d330b91ef7f863da562c59:app/controllers/admin/measurements_controller.rb
 
   def create
     @measurement = @plant.measurements.new(measurement_params)
@@ -47,7 +52,7 @@ class Admin::MeasurementsController < Admin::ApplicationController
     when "ph" then 3
     when "CO2" then 4
     end
-  end 
+  end
 
   def set_plant
     @plant = Plant.find(params[:plant_id])
@@ -55,13 +60,12 @@ class Admin::MeasurementsController < Admin::ApplicationController
 
   def measurement_params
     params.require(:measurement).permit(
-      :temperature,
-      :humidity,
-      :ec,
-      :ph,
-      :CO2,
       :measured_at,
-      :comment
+      measurement_values_attributes: [
+        :measurement_item_id,
+        :value,
+        :text_value
+      ]
     )
   end
 end

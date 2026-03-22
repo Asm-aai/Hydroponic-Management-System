@@ -1,0 +1,46 @@
+<div class="container my-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h2 class="h5 mb-0">測定データ編集</h2>
+    </div>
+    <div class="card-body">
+      <%= form_with model: [@plant, @measurement], local: true do |f| %>
+        <div class="mb-4">
+          <%= f.label :measured_at, "測定日", class: "form-label fw-bold" %>
+          <%= f.date_field :measured_at, class: "form-control" %>
+        </div>
+        <% @measurement.measurement_values.each do |mv| %>
+          <div class="mb-4">
+            <label class="form-label fw-bold">
+              <%= mv.measurement_item.label %>（<%= mv.measurement_item.unit %>）
+              <small class="text-muted ms-2">
+                目標: <%= mv.measurement_item.min_value %>〜<%= mv.measurement_item.max_value %>
+              </small>
+            </label>
+            <%= f.fields_for :measurement_values, mv do |ff| %>
+              <%= ff.hidden_field :id %>
+              <% if mv.measurement_item.label == "備考 / 特記事項" %>
+                <%= ff.text_area :text_value,
+                      class: "form-control",
+                      rows: 3,
+                      placeholder: "自由に記入してください" %>
+              <% else %>
+                <%= ff.number_field :value,
+                      step: 0.01,
+                      class: "form-control",
+                      placeholder: "数値を入力" %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+        <div class="d-flex justify-content-between">
+          <%= link_to "戻る",
+                plant_path(@plant),
+                class: "btn btn-outline-secondary" %>
+          <%= f.submit "更新",
+                class: "btn btn-success px-4" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

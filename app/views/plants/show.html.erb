@@ -34,101 +34,92 @@
   <%= link_to '栽培一覧へ戻る', plants_path, class: "btn btn-outline-secondary mb-4" %>
 
   <!-- 計測値一覧 -->
-  <div class="card mb-4 shadow-sm">
-    <div class="card-header">
-      <h2 class="h5 mb-0"><%= @plant.name %> の計測値一覧</h2>
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+      測定データ一覧
     </div>
-    <div class="card-body p-0">
-      <% if @plant.measurements.any? %>
-        <table class="table table-striped table-hover mb-0">
-          <thead class="table-dark">
+    <div class="card-body">
+      <% if Measurement.exists? %>
+        <table class="table table-bordered table-hover">
+          <thead class="table-light">
             <tr>
               <th>計測日</th>
-              <th>温度</th>
-              <th>湿度</th>
-              <th>EC</th>
-              <th>pH</th>
-              <th>CO2</th>
-              <% if admin_signed_in? %>
-                <th>操作</th>
+              <% MeasurementItem.all.each do |item| %>
+                <th><%= item.label %></th>
               <% end %>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
-            <% @plant.measurements.each do |m| %>
+            <% Measurement.all.each do |measurement| %>
               <tr>
-                <td><%= m.measured_at.present? ? l(m.measured_at, format: :long) : "-" %></td>
-                <td><%= m.temperature %></td>
-                <td><%= m.humidity %></td>
-                <td><%= m.ec %></td>
-                <td><%= m.ph %></td>
-                <td><%= m.CO2 %></td>
-                <% if admin_signed_in? %>
+                <td><%= measurement.measured_at %></td>
+                <% MeasurementItem.all.each do |item| %>
                   <td>
-                    <%= link_to '編集', edit_admin_plant_measurement_path(@plant, m), class: "btn btn-sm btn-outline-secondary me-2" %>
-                    <%= link_to '削除', admin_plant_measurement_path(@plant, m), data: { turbo_method: :delete, confirm: '本当に削除しますか？' }, class: "btn btn-sm btn-outline-danger" %>
+                    <% mv = measurement.measurement_values.find { |v| v.measurement_item_id == item.id } %>
+                    <% if item.label == "備考 / 特記事項" %>
+                      <%= mv&.text_value %>
+                    <% else %>
+                      <%= mv&.value %>
+                    <% end %>
                   </td>
                 <% end %>
+                <td class="text-nowrap">
+                  <%= link_to "編集",
+                    edit_plant_measurement_path(@plant, measurement),
+                    class: "btn btn-sm btn-primary" %>
+
+                  <%= link_to "削除",
+                    plant_measurement_path(@plant, measurement),
+                    data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
+                    class: "btn btn-sm btn-danger" %>
+                </td>
               </tr>
             <% end %>
           </tbody>
         </table>
       <% else %>
-        <p class="p-3 text-center text-muted mb-0">計測値はまだありません。</p>
+        <p class="p-3 text-center text-muted mb-0">
+          計測値はまだありません。
+        </p>
       <% end %>
     </div>
   </div>
-  
 
-
-  <!-- 計測値フォーム -->
+    <!-- 計測値フォーム -->
   <div class="card shadow-sm">
-
-    <% if admin_signed_in? %>
-      <div class="card-header">
-        <h3 class="h5 mb-0">新しい計測を追加</h3>
-      </div>
-      <div class="card-body">
-        <%= form_with url: admin_plant_measurements_path(@plant), local: true, class: "row g-3" do |f| %>
-
-          <div class="col-md-4">
-            <%= label_tag "measurement[temperature]", "温度", class: "form-label" %>
-            <%= number_field_tag "measurement[temperature]", nil, step: 0.01, class: "form-control" %>
+    <div class="card-header bg-success text-white">
+      測定データ登録
+    </div>
+    <div class="card-body">
+      <%= form_with model: [@plant, @measurement], local: true do |f| %>
+        <div class="mb-3">
+          <%= f.label :measured_at, "測定日", class: "form-label" %>
+          <%= f.date_field :measured_at, class: "form-control" %>
+        </div>
+        <% MeasurementItem.all.each do |item| %>
+          <div class="mb-3">
+            <label class="form-label">
+              <%= item.label %>（<%= item.unit %>）
+              <small class="text-muted">
+                目標: <%= item.min_value %>〜<%= item.max_value %>
+              </small>
+            </label>
+            <%= f.fields_for :measurement_values, @measurement.measurement_values.build(measurement_item: item) do |mv| %>
+              <%= mv.hidden_field :measurement_item_id, value: item.id %>
+              <% if item.label == "備考 / 特記事項" %>
+                <%= mv.text_area :text_value, class: "form-control", rows: 3 %>
+              <% else %>
+                <%= mv.number_field :value, step: 0.01, class: "form-control" %>
+              <% end %>
+            <% end %>
           </div>
-
-          <div class="col-md-4">
-            <%= label_tag "measurement[humidity]", "湿度", class: "form-label" %>
-            <%= number_field_tag "measurement[humidity]", nil, step: 0.01, class: "form-control" %>
-          </div>
-
-          <div class="col-md-4">
-            <%= label_tag "measurement[ec]", "EC", class: "form-label" %>
-            <%= number_field_tag "measurement[ec]", nil, step: 0.01, class: "form-control" %>
-          </div>
-
-          <div class="col-md-4">
-            <%= label_tag "measurement[ph]", "pH", class: "form-label" %>
-            <%= number_field_tag "measurement[ph]", nil, step: 0.01, class: "form-control" %>
-          </div>
-
-          <div class="col-md-4">
-            <%= label_tag "measurement[co2]", "CO2", class: "form-label" %>
-            <%= number_field_tag "measurement[CO2]", nil, step: 0.01, class: "form-control" %>
-          </div>
-
-          <div class="col-md-4">
-            <%= label_tag "measurement[measured_at]", "計測日", class: "form-label" %>
-            <%= date_field_tag "measurement[measured_at]", Date.today, class: "form-control", required: true %>
-            
-          </div>
-
-          <div class="col-12">
-            <%= submit_tag "登録する", class: "btn btn-success mt-2" %>
-          </div>
-
         <% end %>
-      </div>
-    <% end %>
+        <div class="text-end">
+          <%= f.submit "登録", class: "btn btn-success" %>
+        </div
+      <% end %>
+    </div>
   </div>
   
 </div>

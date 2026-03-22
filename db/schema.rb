@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_06_070803) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_22_110939) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -88,18 +88,59 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_06_070803) do
     t.index ["plant_id"], name: "index_costs_on_plant_id"
   end
 
+  create_table "measurement_items", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "label", null: false
+    t.string "unit", null: false
+    t.decimal "min_value"
+    t.decimal "max_value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "measurement_values", force: :cascade do |t|
+    t.integer "measurement_id", null: false
+    t.integer "measurement_item_id", null: false
+    t.decimal "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "text_value"
+  end
+
   create_table "measurements", force: :cascade do |t|
     t.integer "plant_id", null: false
-    t.decimal "temperature"
-    t.decimal "humidity"
-    t.decimal "ec"
-    t.decimal "ph"
-    t.decimal "CO2"
     t.date "measured_at"
+    t.boolean "water_changed"
+    t.text "mold_pest_status"
+    t.text "root_status1"
+    t.text "root_status2"
+    t.text "root_status3"
+    t.text "root_status4"
+    t.text "leaf_status"
+    t.date "thinning_date"
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["plant_id"], name: "index_measurements_on_plant_id"
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.integer "plant_id", null: false
+    t.integer "quantity", null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["plant_id"], name: "index_order_items_on_plant_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.decimal "total_price", precision: 10, scale: 2
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -152,7 +193,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_06_070803) do
   add_foreign_key "cart_items", "plants"
   add_foreign_key "carts", "users"
   add_foreign_key "costs", "plants"
+<<<<<<< HEAD
+=======
   add_foreign_key "measurements", "plants"
+>>>>>>> d73354acd91d9a7ad2d330b91ef7f863da562c59
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "plants"
   add_foreign_key "orders", "users"

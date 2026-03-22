@@ -20,6 +20,12 @@ class PlantsController < ApplicationController
 
   def show
     @plant = Plant.find(params[:id])
+    @measurement = Measurement.new
+    @measurements = @plant.measurements.includes(:measurement_items, :measurement_values)
+    @measurement = Measurement.new(measured_at: Date.current)
+    MeasurementItem.all.each do |item|
+      @measurement.measurement_values.build(measurement_item: item)
+    end
   end
 
   def edit
