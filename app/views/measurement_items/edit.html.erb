@@ -1,0 +1,11 @@
+<%= form_with model: @measurement_item do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "項目名" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= f.label :value, "値" %>
+    <%= f.number_field :value, class: "form-control" %>
+  </div>
+  <%= f.submit "更新", class: "btn btn-primary" %>
+<% end %>

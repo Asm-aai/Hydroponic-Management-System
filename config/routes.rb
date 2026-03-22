@@ -4,31 +4,34 @@ Rails.application.routes.draw do
   # get "plants/show"
   # get "plants/edit"
   resources :plants
-  patch 'plants/:id' => 'plants#update', as: 'update_plant'
-  delete 'plants/:id' => 'plants#destroy', as: 'destroy_plant'
+  patch "plants/:id" => "plants#update", as: "update_plant"
+  delete "plants/:id" => "plants#destroy", as: "destroy_plant"
   resources :plants do
-    resources :measurements, only: [:create, :edit, :update, :destroy]
+    resources :measurements, only: [ :create, :edit, :update, :destroy ] do
+      resources :measurement_items
+      resources :measurement_values
+    end
   end
 
   # resources :masurements, only: [:create, :edit, :update, :destroy]
-  get 'measurements_all', to: 'measurements#all', as: :measurements_all
+  get "measurements_all", to: "measurements#all", as: :measurements_all
 
   resources :costs
   resources :alerts
   # devise_for :admins
   # devise_for :users
-  
+
   devise_for :users, controllers: {
-    registrations: 'public/registrations',
-    sessions: 'public/sessions'
+    registrations: "public/registrations",
+    sessions: "public/sessions"
   }
-  #単数形？
+  # 単数形？
 
   devise_for :admins, controllers: {
-    registrations: 'admins/registrations',
-    sessions: 'admins/sessions'
-  } 
-  #単数形？
+    registrations: "admins/registrations",
+    sessions: "admins/sessions"
+  }
+  # 単数形？
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root to: "homes#top"
@@ -44,5 +47,4 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-
 end
