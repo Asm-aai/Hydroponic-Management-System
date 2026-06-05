@@ -4,6 +4,7 @@
   <% @plants.each do |plant| %>
     <div class="card mb-3 shadow-sm">
       <div class="card-body">
+        <p><%= image_tag plant.image, style: "width: 100%; max-width: 300px; height: auto;" if plant.image.attached? %></p>
         <h2 class="h5">
           <%= link_to plant.name, plant_path(plant), class: "text-decoration-none" %>
         </h2>
@@ -12,7 +13,7 @@
           <p><strong>採取日：</strong> <%= l(plant.harvested_at, format: :long) %></p>
         <% end %>
         <p><strong>コメント：</strong> <%= plant.comment %></p>
-        <p><strong>価格：</strong> <%= plant.price %> 円</p>
+        <p><strong>価格：</strong> <%= number_to_currency(plant.price, unit: "円") %></p>
 
         <div class="mt-2">
           <%= link_to '詳細を見る', plant_path(plant), class: "btn btn-outline-primary btn-sm me-2" %>
