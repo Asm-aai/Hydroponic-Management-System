@@ -6,7 +6,8 @@
     </div>
     <div class="card-body">
       <% if @plant.image.attached? %>
-        <p><%= image_tag @plant.image, size: "200x200" %></p>
+        <p><%= image_tag @plant.image, style: "width: 100%; max-width: 800px; height: auto;" %></p>
+        
       <% end %>
       <p><strong>植えた日：</strong> <%= l(@plant.planted_at, format: :long) %></p>
       <% if @plant.harvested_at.present? %>
@@ -41,8 +42,41 @@
     <div class="card-header bg-primary text-white">
       測定データ一覧
     </div>
-    <div class="card-body">
+    <div class="card-body, table-responsive">
       <% if Measurement.exists? %>
+        <div class="table-responsive">
+
+          <%# 縦表示 %>
+          <table class="table table-bordered table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>項目</th>
+                <% Measurement.order(:measured_at).each do |measurement| %>
+                  <th><%= l(measurement.measured_at, format: :short) %></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% MeasurementItem.all.each do |item| %>
+                <tr>
+                  <th><%= item.label %></th>
+                  <% Measurement.order(:measured_at).each do |measurement| %>
+                    <% mv = measurement.measurement_values.find { |v| v.measurement_item_id == item.id } %>
+                    <td>
+                      <% if item.label == "備考 / 特記事項" %>
+                        <%= mv&.text_value %>
+                      <% else %>
+                        <%= mv&.value %>
+                      <% end %>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <%# 横表示 %>
         <table class="table table-bordered table-hover">
           <thead class="table-light">
             <tr>
