@@ -23,8 +23,8 @@ Rails.application.routes.draw do
   # 単数形？
 
   devise_for :admins, controllers: {
-    registrations: "admins/registrations",
-    sessions: "admins/sessions"
+    registrations: "admin/registrations",
+    sessions: "admin/sessions"
   }
   # 単数形？
   resource :cart, only: [ :show ]

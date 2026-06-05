@@ -5,6 +5,9 @@
       <h1 class="h3 mb-0"><%= @plant.name %></h1>
     </div>
     <div class="card-body">
+      <% if @plant.image.attached? %>
+        <p><%= image_tag @plant.image, size: "200x200" %></p>
+      <% end %>
       <p><strong>植えた日：</strong> <%= l(@plant.planted_at, format: :long) %></p>
       <% if @plant.harvested_at.present? %>
         <p><strong>採取日：</strong> <%= l(plant.harvested_at, format: :long) %></p>

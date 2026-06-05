@@ -9,6 +9,11 @@
       <%= form_with(model: @plant, data: { turbo: false }, local: true) do |f| %>
         
         <div class="mb-3">
+          <%= f.label :image, "画像", class: "form-label" %>
+          <%= f.file_field :image, class: "form-control", required: true, accept: "image/*" %>
+        </div>
+
+        <div class="mb-3">
           <%= f.label :name, "植物名", class: "form-label" %>
           <%= f.text_field :name, class: "form-control", required: true %>
         </div>
