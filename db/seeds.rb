@@ -76,8 +76,6 @@ MeasurementItem.create!([
   }
 
 ])
-Admin.create!(
-  email: "admin@example.com",
-  password: "password",
-  password_confirmation: "password"
-)
+Admin.find_or_create_by!(email: "admin@example.com") do |admin|
+  admin.password = "password"
+end
