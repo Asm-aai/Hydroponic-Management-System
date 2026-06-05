@@ -193,10 +193,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_22_110939) do
   add_foreign_key "cart_items", "plants"
   add_foreign_key "carts", "users"
   add_foreign_key "costs", "plants"
-<<<<<<< HEAD
-=======
   add_foreign_key "measurements", "plants"
->>>>>>> d73354acd91d9a7ad2d330b91ef7f863da562c59
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "plants"
   add_foreign_key "orders", "users"

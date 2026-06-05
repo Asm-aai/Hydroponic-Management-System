@@ -46,11 +46,6 @@ class MeasurementItemsController < ApplicationController
   end
 
   def measurement_item_params
-    params.require(:measurement_item).permit(
-      :name,        # 例：施設内温度
-      :unit,        # 例：℃
-      :min_target, # 目標下限
-      :max_target  # 目標上限
-    )
+    params.require(:measurement_item).permit(:name, :label, :unit, :min_value, :max_value)
   end
 end
