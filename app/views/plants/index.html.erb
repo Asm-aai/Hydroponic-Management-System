@@ -4,6 +4,7 @@
   <% @plants.each do |plant| %>
     <div class="card mb-3 shadow-sm">
       <div class="card-body">
+        <p><%= image_tag plant.image, style: "width: 100%; max-width: 300px; height: auto;" if plant.image.attached? %></p>
         <h2 class="h5">
           <%= link_to plant.name, plant_path(plant), class: "text-decoration-none" %>
         </h2>
